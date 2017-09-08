@@ -24,8 +24,25 @@ include ('config/timezone.php');
             </div>
 
             <div class="checkout-container">
-                <div class="checkout">
-
+                <div class="form-div">
+                    <form class="payment-div">
+                        <input type="hidden" name="txvariant" value="card"/>
+                        <div class="form">
+                            <label>
+                                Card number:
+                                <span class="input-field" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber"></span>
+                            </label>
+                            <label>
+                                Expiry date:
+                                <span class="input-field" data-hosted-id="hostedExpiryDateField" data-cse="encryptedExpiryDate"></span>
+                            </label>
+                            <label>
+                                Security code:
+                                <span class="input-field" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode"></span>
+                            </label>
+                        </div>
+                    </form>
+                    <button id="payBtn" type="button" onclick="initiatePayment();"> Submit </button>
                 </div>
             </div>
         </div>

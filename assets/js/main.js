@@ -16,15 +16,11 @@ $(document).ready(function() {
 
         var securedFieldsConfiguration = {
             csfCallback : securedFieldsCallBack,
-            configObject : {
-                origin:  "",
-                originKey: "YOUR_ORIGIN_KEY",
-                publicKeyToken : "YOUR_PUBLIC_KEY_TOKEN"
-            },
-            rootNode: '.payment-div'
+            configObject : jsonResponse,
+            rootNode: '.form-div'
         };
 
-        var securedFields = csf(jsonResponse, '.form-div');
+        var securedFields = csf(securedFieldsConfiguration);
     }
 
 

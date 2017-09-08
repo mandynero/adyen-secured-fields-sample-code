@@ -21,7 +21,7 @@
     width: 100%;
 }
 
-.checkout {
+.form-div {
     margin: 0 auto;
     position: relative;
     width: 60%;
@@ -32,7 +32,7 @@
         width: 100%;
     }
 
-    .checkout {
+    .form-div {
         width: 100%;
     }
 }
