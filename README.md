@@ -17,7 +17,7 @@ To give you a server example, we provide you with a deploy to heroku button.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Adyen/adyen-secured-fields-sample-code)
   
-Alternatively, you could clone this repository and deploy it on your own PHP server
+Alternatively, you could clone this repository and deploy it to your own PHP server
 
 ## Documentation
 
