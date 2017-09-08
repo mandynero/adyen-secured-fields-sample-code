@@ -2,10 +2,12 @@
 
 ## Requirements
 To run this Secured Fields example, edit the following PHP variables in the <b>config/authentication.php</b> file:<br/>
-These variables can be found in our customer area, for more information visit our <a href="https://docs.adyen.com/support/getting-started/step-1-create-a-test-account">getting started guide</a>.<br/>
 
 <b>$merchantAccount</b>: 'YOURMERCHANTACCOUNT'. <br/>
 <b>$checkoutAPIkey</b>: 'YOUR CHECKOUT API KEY'.
+
+These variables can be found in our customer area.
+For more information visit our <a href="https://docs.adyen.com/support/getting-started/step-1-create-a-test-account">getting started guide</a>.<br/>
 
 ## Installation
 
