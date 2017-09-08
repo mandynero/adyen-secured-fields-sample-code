@@ -11,27 +11,25 @@ $(document).ready(function() {
         console.log('Secured Fields called back with data:', data);
     }
 
-
-    function initiateSecuredFields(jsonResponse) {
+    function initiateSecuredFields(jsonResponseObject) {
+        var responseObject = JSON.parse(jsonResponseObject);
 
         var securedFieldsConfiguration = {
             csfCallback : securedFieldsCallBack,
-            configObject : jsonResponse,
+            responseObject : responseObject,
             rootNode: '.form-div'
         };
 
         var securedFields = csf(securedFieldsConfiguration);
     }
 
-
     // Call to the php file, performing the server call to checkoutshopper.adyen.com
     $.ajax({
         url: 'api/serverCall.php',
         dataType:'json',
-        method:'POST',// jQuery > 1.9
+        method:'POST', // jQuery > 1.9
         type:'POST', //jQuery < 1.9
         success:function(data){
-            console.log('successful call to adyen');
             initiateSecuredFields(data);
         },
 
