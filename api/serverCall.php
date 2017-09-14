@@ -2,7 +2,7 @@
 
 global $jsSetupResponse;
 
-$authentication = include('../config/authentication.php');
+$authentication = parse_ini_file('../config/authentication.ini', true);
 $order = include('../payment/order.php');
 $server = include('../config/server.php');
 

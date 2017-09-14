@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     var apiResponse;
+    var securedFields;
 
     // Send styling to securedFields, for more information: https://docs.adyen.com/developers/checkout-javascript-sdk/styling-secured-fields
     var hostedFieldStyle = {
@@ -29,13 +30,28 @@ $(document).ready(function() {
         var responseObject = JSON.parse(jsonResponseObject);
 
         var securedFieldsConfiguration = {
-            csfCallback : securedFieldsCallBack,
-            responseObject : responseObject,
+            configObject : responseObject,
             rootNode: '.form-div'
         };
 
-        var securedFields = csf(securedFieldsConfiguration);
+        securedFields = csf(securedFieldsConfiguration);
     }
+
+    securedFields.onLoad( function(pCallbackObj){
+        // Triggers when securedFields are loaded
+    });
+
+    securedFields.onAllValid( function(pCallbackObj){
+        // Triggers when all fields are valid
+    });
+
+    securedFields.onBrand( function(pCallbackObj){
+        // When receiving a brand callBack
+    });
+
+    securedFields.onError( function(pCallbackObj){
+        // Actions to take on error callback
+    });
 
     // Call to the serverCall.php file, performing the server call to checkoutshopper.adyen.com
     $.ajax({

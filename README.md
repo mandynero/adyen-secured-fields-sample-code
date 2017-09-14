@@ -1,10 +1,14 @@
-# Adyen Secured Fields example
+# Checkout SDK PHP server example
+
+## This repository is for demo purposes only
+This PHP server example is intended to help developers to get quickly up and running with our Secured Fields library. <br/>
+Always ask a back-end developer to create an implementation of this product.
 
 ## Requirements
-To run this Secured Fields example, edit the following PHP variables in the <b>config/authentication.php</b> file:<br/>
+To run this Secured Fields example, edit the following variables in the <b>config/authentication.ini</b> file:<br/>
 
-<b>$merchantAccount</b>: 'YOURMERCHANTACCOUNT'. <br/>
-<b>$checkoutAPIkey</b>: 'YOUR CHECKOUT API KEY'.
+<b>$merchantAccount</b>= "YOURMERCHANTACCOUNT". <br/>
+<b>$checkoutAPIkey</b>= "YOUR CHECKOUT API KEY". <br/>
 
 These variables can be found in our customer area.
 For more information visit our <a href="https://docs.adyen.com/support/getting-started/step-1-create-a-test-account">getting started guide</a>.<br/>
