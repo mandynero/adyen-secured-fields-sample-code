@@ -1,8 +1,15 @@
 <?php
+date_default_timezone_set("Europe/Amsterdam");
 
 global $jsSetupResponse;
 
-$authentication = parse_ini_file('../config/authentication.ini', true);
+if (!empty (getenv('MERCHANT_ACCOUNT')) && !empty(getenv('CHECKOUT_API_KEY'))) {
+    $authentication['merchantAccount'] = getenv('MERCHANT_ACCOUNT');
+    $authentication['checkoutAPIkey'] = getenv('CHECKOUT_API_KEY');
+} else {
+    $authentication = parse_ini_file('../config/authentication.ini', true);
+}
+
 $order = include('../payment/order.php');
 $server = include('../config/server.php');
 
@@ -15,7 +22,6 @@ function requestPaymentData($order, $server, $authentication)
         'amount' => $order['amount'],
         'channel' => $order['channel'],
         'countryCode' => $order['countryCode'],
-        'html' => $order['html'],
         'shopperReference' => $order['shopperReference'],
         'shopperLocale' => $order['shopperLocale'],
         'reference' => $order['reference'],
@@ -63,10 +69,8 @@ function requestPaymentData($order, $server, $authentication)
     // Closing
     curl_close($curlAPICall);
 
-    $jsSetupResponse = json_encode($result);
-
     // When this file gets called by javascript or another language, it will respond with a json object
-    echo $jsSetupResponse;
+    echo $result;
 }
 
 requestPaymentData($order, $server, $authentication);

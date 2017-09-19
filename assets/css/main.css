@@ -41,6 +41,9 @@
 .button--pay {
     color: #fff;
     background-color: #0abf53;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
     border: none;
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -53,6 +56,10 @@
 .button--pay.disabled {
     pointer-events: none;
     opacity: .5;
+}
+
+.brand-container__image {
+    width: 40px;
 }
 
 /* Page styling */

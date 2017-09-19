@@ -37,7 +37,6 @@ return array(
     'amount' => $amount,
     'channel' => $channel,
     'countryCode' => $countryCode,
-    'html' => true,
     'shopperReference' => $shopperReference,
     'shopperLocale' => $shopperLocale,
     'reference' => $reference,
