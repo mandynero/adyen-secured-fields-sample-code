@@ -13,11 +13,12 @@ include ('config/timezone.php');
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://checkoutshopper-test.adyen.com/checkoutshopper/assets/js/sdk/checkoutSecuredFields.1.0.min.js"></script>
+    <script type="text/javascript" src="https://checkoutshopper-test.adyen.com/checkoutshopper/js/checkoutInitiatePayment.min.js"></script>
 </head>
 <body class="body">
 <div class="content">
     <div class="explanation">
-        <h3>To run this securedFields example, edit the following PHP variables in the <b>config/authentication.php</b> file:</h3>
+        <h3>To run this securedFields example, edit the following PHP variables in the <b>config/authentication.ini</b> file:</h3>
         <p>
             <b>$merchantAccount</b>: 'YOUR MERCHANT ACCOUNT', more information in our <a href="https://docs.adyen.com/support/getting-started/step-1-create-a-test-account">Getting started guide</a>.<br/>
             <b>$checkoutAPIkey</b>: 'YOUR CHECKOUT API KEY'.
@@ -43,7 +44,7 @@ include ('config/timezone.php');
                         <span class="input-field" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode"></span>
                     </div>
                 </div>
-            <button id="" class="button--pay disabled" type="button" onclick="initiatePayment();">Submit data to Adyen</button>
+                <button id="payBtn" class="button--pay disabled" type="button" onclick="authorizePayment();">Submit data to Adyen</button>
             </form>
         </div>
     </div>

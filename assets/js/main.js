@@ -1,12 +1,12 @@
 $(document).ready(function() {
 
-    var apiResponse,
+    var apiResponseData,
         securedFields,
-        stayHidden = false,
+        paymentMethodType,
+        showHint = false,
         payButton = $(".button--pay"),
         logoBaseUrl,
         brandImage = $('.brand-container__image');
-
 
 
     // Send styling to securedFields, for more information: https://docs.adyen.com/developers/checkout-javascript-sdk/styling-secured-fields
@@ -16,52 +16,53 @@ $(document).ready(function() {
         }
     };
 
-    // all callBack functionality responding to the postMessages coming from the iframes
-    function securedFieldsCallBack(data) {
-
-        // To view all data coming in from the callback, console.log(data)
-        if (data.brandText !== undefined) {
-            $('.label-security-code').text(data.brandText);
-        }
-
-        if (data.allValid !== undefined && data.allValid === true) {
-            $('.button--pay').removeClass('disabled');
-        } else {
-            $('.button--pay').addClass('disabled');
-        }
-
-    }
-
+    // Functionality around showing hint on how to configure the 'setup' call
     var explanationDiv = $('.explanation');
     explanationDiv.hide();
 
     function showExplanation() {
-        if (stayHidden === true) {
-            explanationDiv.removeClass('hidden');
+        if (showHint) {
+            explanationDiv.show();
         }
     }
 
-    window.setTimeout(showExplanation(), 4000);
+    window.setTimeout(showExplanation, 4000);
 
-    // initiateSecureddFields(jsonResponseObject) renders the iframes onto your custom divs
-    function initiateSecuredFields(jsonResponseObject) {
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////// INITIALIZE CHECKOUT SECURED FIELDS /////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @function Renders the hosted iframes into the elements created to hold them
+     * (In this case <span> elements within the <form> element)
+     *
+     * @param jsonResponseObject - the JSON response from the 'setup' call to the Adyen CheckoutAPI
+     */
+    function initializeSecuredFields(jsonResponseObject) {
+
+        // Create config object
         var securedFieldsConfiguration = {
             configObject : jsonResponseObject,
-            rootNode: '.form-div'
+            rootNode: '.form-div',
+            cssStyles : hostedFieldStyle
         };
 
+        // Pass config object to checkoutSecuredFields
         securedFields = csf(securedFieldsConfiguration);
 
+        // Add listeners to checkoutSecuredFields
         securedFields.onLoad( function(){
+            // Triggers when all the securedFields iframes are loaded
+        });
 
-            // Triggers when securedFields are loaded
-
+        securedFields.onFieldValid( function(fieldValidObject){
+            // Triggers as individual input fields become valid - and triggers again if the same field becomes invalid
         });
 
         securedFields.onAllValid( function(allValidObject){
+            // Triggers when all the credit card input fields are valid - and triggers again if this state changes
 
-            // Triggers when all fields are valid
             if (allValidObject.allValid === true) {
                 payButton.removeClass('disabled');
             } else {
@@ -69,21 +70,26 @@ $(document).ready(function() {
             }
         });
 
-        // Triggered when receiving a brand callBack
         securedFields.onBrand( function(brandObject){
+            // Triggered when receiving a brand callback from the credit card number validation
+
             if (brandObject.brand) {
                 brandImage.attr("src",logoBaseUrl + brandObject.brand + "@2x.png");
+                paymentMethodType = brandObject.brand;
             }
         });
 
         securedFields.onError( function(pCallbackObj){
-            // Actions to take on error callback
-
+            // Triggered when an error occurs e.g. invalid date
         });
     }
 
 
-    // Call to the serverCall.php file, performing the server call to checkoutshopper.adyen.com
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////// PERFORM SETUP CALL /////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Make 'setup' call with serverCall.php - performs the server call to checkout.adyen.com
     $.ajax({
         url: 'api/serverCall.php',
         dataType:'json',
@@ -91,10 +97,27 @@ $(document).ready(function() {
         type:'POST', //jQuery < 1.9
 
         success:function(data) {
-            logoBaseUrl = data.logoBaseUrl;
+
+            // Store JSON response from 'setup' call
+            apiResponseData = data;
+
+            // Store base url for setting card brand images
+            logoBaseUrl = apiResponseData.logoBaseUrl;
+
+            // Set initial 'generic' card logo
             brandImage.attr("src", logoBaseUrl + "card@2x.png");
-            initiateSecuredFields(data);
-            stayHidden = true;
+
+            // For demo purposes check that the expected object has been loaded, otherwise show hint
+            if(apiResponseData.hasOwnProperty('originKey')){
+
+                // Initialize checkoutSecuredFields
+                initializeSecuredFields(apiResponseData);
+
+            }else{
+
+                // Show hint to edit Merchant Account property etc
+                showHint = true;
+            }
         },
 
         error : function(){
@@ -103,4 +126,51 @@ $(document).ready(function() {
             }
         }
     });
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////// AUTHORIZE PAYMENT //////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @function Create a function that the 'Pay' button can call on click.
+     * Uses the global var 'cip', created when checkoutInitiatePayment.js is loaded, to authorize a payment
+     * against checkout.adyen.com
+     */
+    window.authorizePayment = function(){
+
+        // Disable 'Pay' button
+        var payBtn = $('#payBtn')[0];
+        payBtn.style['pointer-events'] = 'none';
+
+        // Get reference to main 'holder' div
+        var holder = $('.form-div')[0];
+
+        // Get reference to <form> element that holds the securedFields
+        var form = $('.payment-div')[0];
+
+
+        //////////////// SUBMIT PAYMENT INITIATION REQUEST ///////////////
+        var successFn = function(data){
+
+            holder.innerHTML = '<p>Your payment has been processed: type="' + data.type + '" , resultCode="' + data.resultCode + '"</p>' + '<p> payload=' + data.payload + '</p>';
+        }
+
+        var errorFn = function(xhr, status, text){
+
+            holder.innerHTML = 'SUBMIT ERROR status="' + status + '", text=' + text;
+        }
+
+        var initPayConfig = {
+            responseData : apiResponseData,
+            pmType : paymentMethodType,
+            formEl : form,
+            onSuccess : successFn,
+            onError : errorFn
+        }
+
+        var res = chcktPay(initPayConfig);
+
+        //--------- end SUBMIT PAYMENT INITIATION REQUEST -----------------
+    }
 });
