@@ -37,6 +37,8 @@ $(document).ready(function() {
      * @function Renders the hosted iframes into the elements created to hold them
      * (In this case <span> elements within the <form> element)
      *
+     * Uses the global var 'csf' created when checkoutSecuredFields.min.js is loaded
+     *
      * @param jsonResponseObject - the JSON response from the 'setup' call to the Adyen CheckoutAPI
      */
     function initializeSecuredFields(jsonResponseObject) {
@@ -133,7 +135,7 @@ $(document).ready(function() {
 
     /**
      * @function Create a function that the 'Pay' button can call on click.
-     * Uses the global var 'cip', created when checkoutInitiatePayment.js is loaded, to authorize a payment
+     * Uses the global var 'cip', created when checkoutInitiatePayment.min.js is loaded, to authorize a payment
      * against checkout.adyen.com
      */
     window.authorizePayment = function(){
