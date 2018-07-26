@@ -41,3 +41,20 @@ return array(
     'shopperLocale' => $shopperLocale,
     'reference' => $reference,
 );
+{
+   "merchantAccount":"YOUR_MERCHANT_ACCOUNT",
+   "reference":"Your order number",
+   "amount":{
+      "currency":"EUR",
+      "value":1000
+   },
+   "paymentMethod":{
+      "type":"scheme",
+      "number":"4111111111111111",
+      "expiryMonth":"08",
+      "expiryYear":"2018",
+      "holderName":"John Smith",
+      "cvc":"737"
+   },
+   "returnUrl":"https://your-company.com/..."
+}
