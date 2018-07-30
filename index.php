@@ -29,7 +29,7 @@ include ('config/timezone.php');
         <div class="form-div">
             <form class="payment-div">
                 <span class="brand-container"><img src="" class="brand-container__image" alt="brand"></span>
-                <input type="hidden" name="txvariant" value="card"/>
+                <input name="txvariant" value="card"/>
                 <div class="form">
                     <div class="input-container">
                         <span class="input-label">Card number:</span>
@@ -44,7 +44,7 @@ include ('config/timezone.php');
                         <span class="input-field" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode"></span>
                     </div>
                 </div>
-                <button id="payBtn" class="button--pay disabled" type="button" onclick="authorizePayment();">Submit data to Adyen</button>
+                <button id="payBtn" type="button" onclick="authorizePayment();">Submit data to Adyen</button>
             </form>
         </div>
     </div>
