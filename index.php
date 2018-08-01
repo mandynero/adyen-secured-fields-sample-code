@@ -18,11 +18,6 @@ include ('config/timezone.php');
 <body class="body">
 <div class="content">
     <div class="explanation">
-        <h3>To run this securedFields example, edit the following PHP variables in the <b>config/authentication.ini</b> file:</h3>
-        <p>
-            <b>$merchantAccount</b>: 'ws_177774@Company.SupportRecruitement', more information in our <a href="https://docs.adyen.com/support/getting-started/step-1-create-a-test-account">Getting started guide</a>.<br/>
-            <b>$checkoutAPIkey</b>: 'AQE1hmfxLo3JbBJGw0m/n3Q5qf3Ve55dHZxYTFdTxWq+l3JOk8J4BBaO8VulsFCMP6cdxO7JuPIQwV1bDb7kfNy1WIxIIkxgBw==-lv74KmIy4X1sycBy2q0C+ms10u6EU3cuYgNLeIqAo8I=-7qdLs2HHwja5IywK'.
-        </p>
     </div>
 
     <div class="checkout-container">
