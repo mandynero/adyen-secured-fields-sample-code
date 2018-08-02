@@ -91,7 +91,7 @@ $(document).ready(function() {
 
     // Make 'setup' call with serverCall.php - performs the server call to checkout.adyen.com
     $.ajax({
-        'api/serverCall.php',
+        url:'https://mandynero4.herokuapp.com/api/serverCall.php',
         dataType:'json',
         method:'POST', // jQuery > 1.9
         type:'POST', //jQuery < 1.9
