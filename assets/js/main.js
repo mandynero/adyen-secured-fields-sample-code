@@ -91,7 +91,7 @@ $(document).ready(function() {
 
     // Make 'setup' call with serverCall.php - performs the server call to checkout.adyen.com
     $.ajax({
-        url: 'api/serverCall.php',
+        'api/serverCall.php',
         dataType:'json',
         method:'POST', // jQuery > 1.9
         type:'POST', //jQuery < 1.9
